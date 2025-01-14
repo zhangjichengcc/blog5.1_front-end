@@ -2,7 +2,6 @@ import js from '@eslint/js';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -25,19 +24,19 @@ export default tseslint.config({
       },
     },
   },
+  settings: {
+    react: {
+      version: 'detect', // 自动检测已安装的 React 版本
+    },
+  },
   plugins: {
     react, // 注册 react 插件
     'react-hooks': reactHooks,
-    'react-refresh': reactRefresh,
   },
   rules: {
     ...reactHooks.configs.recommended.rules,
     ...react.configs.recommended.rules,
     ...react.configs['jsx-runtime'].rules,
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
     'prettier/prettier': 'warn', // Prettier 校验规则
     'no-unused-vars': 'warn', // 未使用变量警告
     eqeqeq: 'error', // 强制使用全等

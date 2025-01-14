@@ -1,10 +1,16 @@
-import '@/styles/global.less';
-import { StrictMode } from 'react';
+import routes from '@/routes.tsx';
+import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import '@/styles/global.less';
+
+const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <Suspense fallback={<div style={{ color: '#fff' }}>Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
   </StrictMode>,
 );
