@@ -2,17 +2,18 @@
  * @Author: zhangjicheng
  * @Date: 2022-10-12 23:09:35
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2025-01-14 18:10:59
+ * @LastEditTime: 2025-01-16 17:02:34
  * @FilePath: /blog5.1_front-end/src/pages/Home/Portfolio/index.tsx
  */
 
 import docsPreview from '@/assets/Home/project-docs.png';
 import excalidraw from '@/assets/Home/project-excalidraw.png';
+import PartTitle from '@/components/PartTitle';
+import { type PartComponentProps } from '@/pages/Home';
+import { useAppSelector } from '@/store';
 import { formatDataset } from '@/utils/tools';
 import classnames from 'classnames';
-import { CSSProperties, forwardRef } from 'react';
-import { useSelector } from 'react-redux';
-import PartTitle from '../../../components/PartTitle';
+import { FC } from 'react';
 
 import styles from './index.module.less';
 
@@ -29,33 +30,12 @@ const PortfolioItem = [
     preview: excalidraw,
     url: '',
   },
-  {
-    title: 'Personal docs',
-    info: '个人文档，记录开发学习过程和问题个人文档，记录开发学习过程和问题',
-    preview: docsPreview,
-    url: '',
-  },
-  {
-    title: 'Personal docs',
-    info: '个习过程和问题',
-    preview: docsPreview,
-    url: '',
-  },
-  {
-    title: 'Personal docs',
-    info: '个人文档，记录开发学习过程和问题个人文档，记录开发学习过程和问题个人文档，记录开发学习过程和问题个人文档，记录开发学习过程和问题',
-    preview: docsPreview,
-    url: '',
-  },
 ];
 
-const Portfolio = forwardRef<
-  HTMLDivElement,
-  { style?: CSSProperties; id?: string; dataset?: Record<string, any> }
->((props, ref) => {
+const Portfolio: FC<PartComponentProps> = (props) => {
   const { style, id, dataset = {} } = props;
 
-  const grid = useSelector((state) => state.global.gird);
+  const grid = useAppSelector((state) => state.global.gird);
 
   const datasetMap = formatDataset(dataset);
 
@@ -66,7 +46,6 @@ const Portfolio = forwardRef<
   return (
     <div
       id={id}
-      ref={ref}
       className={classnames(styles.portfolio, grid && styles['grid-' + grid])}
       style={style}
       {...datasetMap}
@@ -93,6 +72,6 @@ const Portfolio = forwardRef<
       </div>
     </div>
   );
-});
+};
 
 export default Portfolio;

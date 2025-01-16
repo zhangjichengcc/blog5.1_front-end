@@ -38,7 +38,7 @@ export default tseslint.config({
     ...react.configs.recommended.rules,
     ...react.configs['jsx-runtime'].rules,
     'prettier/prettier': 'warn', // Prettier 校验规则
-    'no-unused-vars': 'warn', // 未使用变量警告
+    // 'no-unused-vars': 'warn', // 未使用变量警告
     eqeqeq: 'error', // 强制使用全等
   },
 });

@@ -2,16 +2,16 @@
  * @Author: zhangjicheng
  * @Date: 2022-10-12 23:41:44
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2024-09-11 16:23:48
- * @FilePath: /blog5.0_front-end/src/components/HomeMenu/TopMenu/Menu/index.tsx
+ * @LastEditTime: 2025-01-15 11:20:16
+ * @FilePath: /blog5.1_front-end/src/components/HomeMenu/TopMenu/Menu/index.tsx
  */
-import { useEffect } from 'react';
 import classnames from 'classnames';
+import { useEffect } from 'react';
 // import { deepClone } from '@/utils';
-import { useScroll } from 'ahooks';
 import { type MenuItem } from '@/components/HomeMenu';
+import { useScroll } from 'ahooks';
 
-import styles from './index.less';
+import styles from './index.module.less';
 
 interface Props {
   menu: Array<MenuItem>;

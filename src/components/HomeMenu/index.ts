@@ -1,6 +1,5 @@
 export { default as TopMenu } from './TopMenu';
-export { default as BottomMenu } from './BottomMenu';
-import { type MenuKey } from '@/pages/Home';
+// export { default as BottomMenu } from './BottomMenu';
 
 import { DomRect } from '@/utils/tools';
 
@@ -9,11 +8,13 @@ import { DomRect } from '@/utils/tools';
  */
 export interface MenuItem {
   /** 菜单关键字 */
-  key: MenuKey;
+  key: string;
   /** 菜单名称 */
   label: string;
   /** dom定位信息 */
   domRect?: DomRect;
   /** 地址 */
   url?: string;
+  /** 组件 */
+  component?: React.ComponentType;
 }

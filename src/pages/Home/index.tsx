@@ -2,20 +2,16 @@
  * @Author: zhangjicheng
  * @Date: 2025-01-14 14:43:30
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2025-01-14 19:08:25
+ * @LastEditTime: 2025-01-16 17:07:13
  * @FilePath: /blog5.1_front-end/src/pages/Home/index.tsx
  * @Description: Do not edit
  */
 
+import { TopMenu } from '@/components/HomeMenu';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FC, useCallback, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-// import { useAppDispatch } from '@/store';
-import { MenuItem } from '@/components/HomeMenu';
-import { setActiveMenu, setMenu } from '@/store/slice/homeSlice';
-// import { debounce } from '@/utils';
+import { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import About from './About';
 import Banner from './Banner';
 import Blog from './Blog';
@@ -23,14 +19,25 @@ import Contact from './Contact';
 import Portfolio from './Portfolio';
 import Service from './Service';
 
+import { useDebounceFn } from 'ahooks';
 import styles from './index.module.less';
 
+export interface PartComponentProps {
+  style?: CSSProperties;
+  id?: string;
+  dataset?: Record<string, string>;
+}
+
 /** 首页模块列表 */
-const sections = [
+const sections: {
+  component: FC<PartComponentProps>;
+  label: string;
+  key: string;
+}[] = [
   {
     component: Banner,
-    label: 'Home',
-    key: 'home',
+    label: 'Banner',
+    key: 'banner',
   },
   {
     component: About,
@@ -57,8 +64,9 @@ const sections = [
     label: 'Blog',
     key: 'blog',
   },
-] as const;
+];
 
+/** Home 导航key集合 */
 export type MenuKey = (typeof sections)[number]['key'];
 
 // 注册插件
@@ -66,29 +74,20 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Home: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
 
-  /**
-   * 初始化首页目录导航
-   */
-  function initMenu() {
-    const menu: MenuItem[] = sections.map((item) => ({
-      label: item.label,
-      key: item.key,
-    }));
-
-    // 设置菜单
-    dispatch(setMenu(menu));
-  }
+  const [activeKey, setActiveKey] = useState<MenuKey>('banner');
 
   /**
    * 使用函数节流设置激活菜单，防止频繁触发activeKey
    */
-  const setActiveMenuDebounce = useCallback(
-    // debounce((key) => appDispatch(setActiveMenu(key))),
-    (key) => dispatch(setActiveMenu(key)),
-    [],
-  );
+  const { run: setActiveMenuDebounce } = useDebounceFn(
+    (key: MenuKey) => {
+      setActiveKey(key);
+    },
+    {
+      wait: 300,
+    },
+  ) as { run: (key: MenuKey) => void };
 
   /**
    * 监听滚动，设置当前模块
@@ -102,7 +101,7 @@ const Home: FC = () => {
           const { dataset } = target as HTMLElement;
           if (isIntersecting) {
             const { label, key } = dataset;
-            setActiveMenuDebounce(key);
+            setActiveMenuDebounce(key as MenuKey);
             document.title = label!;
           }
         });
@@ -111,30 +110,39 @@ const Home: FC = () => {
     );
 
     childNodes.forEach((node) => {
-      node instanceof Element && observer.observe(node);
+      if (node instanceof Element) {
+        observer.observe(node);
+      }
     });
 
     return () => observer.disconnect();
   }
 
   useEffect(() => {
-    initMenu();
     bindMenuScroll();
-  }, []);
+  });
 
   return (
-    <div ref={ref} className={styles.home}>
-      {sections.map((item) => (
-        <item.component
-          dataset={item}
-          key={item.key}
-          id={item.key}
-          style={{
-            // ...cssStyle,
-            transition: 'padding .3s ease',
-          }}
-        />
-      ))}
+    <div className={styles.home}>
+      <TopMenu menu={sections} activeKey={activeKey} />
+      <div ref={ref} className={styles.container}>
+        {sections.map((item) => {
+          const Component = item.component;
+          return Component ? (
+            <Component
+              dataset={{
+                label: item.label,
+                key: item.key,
+              }}
+              id={item.key}
+              key={item.key}
+              style={{
+                transition: 'padding .3s ease',
+              }}
+            />
+          ) : null;
+        })}
+      </div>
     </div>
   );
 };

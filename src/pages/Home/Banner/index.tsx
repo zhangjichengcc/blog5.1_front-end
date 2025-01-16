@@ -2,37 +2,34 @@
  * @Author: zhangjicheng
  * @Date: 2022-10-12 23:09:35
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2025-01-14 18:12:33
+ * @LastEditTime: 2025-01-16 16:53:37
  * @FilePath: /blog5.1_front-end/src/pages/Home/Banner/index.tsx
  */
 
 import trophyIcon from '@/assets/Home/trophy.svg';
 import CircularText from '@/components/CircularText';
 import StrokeText from '@/components/StrokeText';
+import { type PartComponentProps } from '@/pages/Home';
+import { useAppSelector } from '@/store';
 import { formatDataset } from '@/utils/tools';
 import { useGSAP } from '@gsap/react';
 import classnames from 'classnames';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { CSSProperties, FC, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { FC, useRef } from 'react';
 
 import styles from './index.module.less';
 
 // 注册插件
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const Banner: FC<{
-  style?: CSSProperties;
-  id?: string;
-  dataset?: Record<string, any>;
-}> = (props) => {
+const Banner: FC<PartComponentProps> = (props) => {
   const { id, dataset = {} } = props;
   const ref = useRef<HTMLDivElement>(null);
   const leftCol = useRef<HTMLDivElement>(null);
   const rightCol = useRef<HTMLDivElement>(null);
 
-  const grid = useSelector((state) => state.global.gird);
+  const grid = useAppSelector((state) => state.global.gird);
 
   const datasetMap = formatDataset(dataset);
 
@@ -114,8 +111,6 @@ const Banner: FC<{
       id={id}
       ref={ref}
       className={classnames(styles.banner, grid && styles['grid-' + grid])}
-      // ! 不使用style paddingTop
-      // style={style}
       {...datasetMap}
     >
       <div className={styles.row}>
@@ -184,8 +179,8 @@ const Banner: FC<{
             </div>
             <div
               className={styles.trophy}
-              style={{ backgroundImage: `url(${trophyIcon})` }}
-            ></div>
+              style={{ backgroundImage: `url("${trophyIcon}")` }}
+            />
             <CircularText
               radius={70}
               fontSize={33}

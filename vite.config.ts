@@ -5,7 +5,11 @@ import svgr from 'vite-plugin-svgr';
 // https://cn.vite.dev/config/
 export default defineConfig({
   plugins: [
-    svgr(), // 添加 svgr 插件
+    svgr({
+      svgrOptions: {
+        icon: true,
+      },
+    }), // 添加 svgr 插件
     react(),
   ],
   css: {

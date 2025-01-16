@@ -7,3 +7,11 @@
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 ## 项目启动
+
+## 相关连接
+
+[ahooks v3.8.4](https://ahooks.js.org/)
+[eslint v9.18.0](https://eslint.org/docs/latest/)
+[vite v6.0](https://cn.vite.dev/)
+[react v19](https://zh-hans.react.dev/reference/react)
+[react router v7.1.1](https://reactrouter.com/7.1.1/home)

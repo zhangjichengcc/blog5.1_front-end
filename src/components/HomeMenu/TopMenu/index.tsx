@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-10-12 15:47:48
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2025-01-14 18:05:43
+ * @LastEditTime: 2025-01-15 10:19:47
  * @FilePath: /blog5.1_front-end/src/components/HomeMenu/TopMenu/index.tsx
  */
 import { type MenuItem } from '@/components/HomeMenu';
@@ -32,8 +32,10 @@ const Header: FC<Props> = (props) => {
   }
 
   useEffect(() => {
-    onHeightChange?.(menuHeight);
-  }, [menuHeight]);
+    if (onHeightChange) {
+      onHeightChange(menuHeight);
+    }
+  }, [menuHeight, onHeightChange]);
 
   useEffect(() => {
     setMenuHeight(scroll?.top || 0 > 200 ? 60 : 90);

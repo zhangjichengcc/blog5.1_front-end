@@ -1,93 +1,47 @@
-@font-face {
-  font-family: 'Barlow';
-  src: url('~@/assets/font/7cHqv4kjgoGqM7E30-8s51ostz0rdg.woff2')
-    format('woff2');
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  src: url('@/assets/font/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-mu0SC55I.woff2')
-    format('woff2');
-}
-
-// 字体
-.font-family-barlow {
-  font-family: 'Barlow', sans-serif;
-}
-
-// 字体
-.font-family-open-sans {
-  font-family: 'Open Sans', sans-serif;
-}
-
-/** 设置滚动条 */
-.has-scrollbar {
-  &::-webkit-scrollbar {
-    /* 隐藏默认的滚动条 */
-    -webkit-appearance: none;
-  }
-
-  &::-webkit-scrollbar:vertical {
-    /* 设置垂直滚动条宽度 */
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar:horizontal {
-    /* 设置水平滚动条厚度 */
-    height: 6px;
-  }
-
-  &::-webkit-scrollbar-button {
-    width: 100%;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    /* 滚动条的其他样式定制，注意，这个一定也要定制，否则就是一个透明的滚动条 */
-    border-radius: 6px;
-    background-color: @active-blue;
-  }
-}
-
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: @bg-color;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+html,
+body {
+  width: 100% !important;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  color: @default-color;
+  .screen-config;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+// 重置css
+ul,
+ol,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ul,
+ol,
+dl {
+  list-style: none;
 }
 
 button {

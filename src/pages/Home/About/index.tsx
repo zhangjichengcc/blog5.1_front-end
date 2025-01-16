@@ -2,24 +2,20 @@
  * @Author: zhangjicheng
  * @Date: 2022-10-12 23:09:35
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2025-01-14 19:07:56
+ * @LastEditTime: 2025-01-16 16:52:37
  * @FilePath: /blog5.1_front-end/src/pages/Home/About/index.tsx
  */
-// import { ReactComponent as AppIcon } from '@/assets/Home/icon-app.svg';
-// import { ReactComponent as ComIcon } from '@/assets/Home/icon-components.svg';
-// import { ReactComponent as DesignIcon } from '@/assets/Home/icon-design.svg';
-// import { ReactComponent as DevIcon } from '@/assets/Home/icon-dev.svg';
 import AppIcon from '@/assets/Home/icon-app.svg?react';
 import ComIcon from '@/assets/Home/icon-components.svg?react';
 import DesignIcon from '@/assets/Home/icon-design.svg?react';
 import DevIcon from '@/assets/Home/icon-dev.svg?react';
-import type { RootState } from '@/store';
+import PartTitle from '@/components/PartTitle';
+import { type PartComponentProps } from '@/pages/Home';
+import { useAppSelector } from '@/store';
 import { formatDataset } from '@/utils/tools';
 import classnames from 'classnames';
-import { CSSProperties, forwardRef } from 'react';
-import { useSelector } from 'react-redux';
 
-import PartTitle from '../../../components/PartTitle';
+import { FC } from 'react';
 import styles from './index.module.less';
 
 const cards = [
@@ -45,19 +41,15 @@ const cards = [
   },
 ] as const;
 
-const About = forwardRef<
-  HTMLDivElement,
-  { style?: CSSProperties; id?: string; dataset?: Record<string, any> }
->((props, ref) => {
+const About: FC<PartComponentProps> = (props) => {
   const { style, id, dataset = {} } = props;
-  const grid = useSelector((state: RootState) => state.global.gird);
+  const grid = useAppSelector((state) => state.global.gird);
 
   const datasetMap = formatDataset(dataset);
 
   return (
     <div
       id={id}
-      ref={ref}
       className={classnames(styles.about, grid && styles['grid-' + grid])}
       style={style}
       {...datasetMap}
@@ -92,6 +84,6 @@ const About = forwardRef<
       </div>
     </div>
   );
-});
+};
 
 export default About;
